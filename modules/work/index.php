@@ -100,6 +100,7 @@ if ($is_editor) {
             $('#assignees_tbl').addClass('hide');
             $('#assignee_box').find('option').remove();
         }
+        
         function changeAssignLabel()
         {
             var assign_to_specific = $('input:radio[name=assign_to_specific]:checked').val();
@@ -1628,7 +1629,7 @@ function show_assignment($id, $display_graph_results = false) {
             $tool_content .= "
                         <form action='$_SERVER[SCRIPT_NAME]?course=$course_code' method='post'>
                         <input type='hidden' name='grades_id' value='$id' />
-                        <p><div class='sub_title1'>$langSubmissions:</div><p>
+                        <p><div class='sub_title2'>$langSubmissions:</div><p>
                         <p>$num_of_submissions</p>
                         <table width='100%' class='sortable'>
                         <tr>
@@ -1795,7 +1796,7 @@ function show_non_submitted($id) {
                 $tool_content .= "
                             <p><div class='sub_title1'>$m[WorkUserNoSubmission]:</div><p>
                             <p>$num_of_submissions</p>
-                            <div class='table-responsive'>
+                              <div class='table-responsive'>
                             <table class='table-default'>
                             <tr>
                           <th width='3'>&nbsp;</th>";
@@ -1817,7 +1818,9 @@ function show_non_submitted($id) {
                             
                     $i++;
                 }
-                $tool_content .= "</table></div>";
+                $tool_content .= "</table>";
+                $tool_content .= "</div";
+                
         } else {
             $tool_content .= "
                       <p class='sub_title1'>$m[WorkUserNoSubmission]:</p>
@@ -1905,6 +1908,8 @@ function show_student_assignments() {
     }
 }
 
+
+
 // show all the assignments
 function show_assignments() {
     global $tool_content, $m, $langEdit, $langDelete, $langNoAssign, $langNewAssign, $langCommands,
@@ -1933,6 +1938,7 @@ function show_assignments() {
                       <th class='text-center'>$m[deadline]</th>
                       <th class='text-center'>".icon('fa-gears')."</th>
                     </tr>";
+                    
         $index = 0;
         foreach ($result as $row) {
             // Check if assignement contains submissions
@@ -1981,11 +1987,15 @@ function show_assignments() {
                    "</td></tr>";
             $index++;
         }
-        $tool_content .= '</table></div>';
+        $tool_content .= '</table><form><input class="btn btn-success" type="button" value="Create Rank Report" onClick="self.location=\'rank_report.php\'">
+</form></div>';
+                
     } else {
         $tool_content .= "\n<div class='alert alert-warning'>$langNoAssign</div>";        
     }
 }
+
+
 
 // submit grade and comment for a student submission
 function submit_grade_comments($id, $sid, $grade, $comment, $email) {
@@ -2254,3 +2264,4 @@ function groups_with_no_submissions($id) {
     }
     return $groups;
 }
+                
